@@ -1,0 +1,76 @@
+#
+# OpenSSL configuration file.
+#
+ 
+# Establish working directory.
+ 
+dir						= .
+ 
+[ ca ]
+default_ca				= CA_default
+ 
+[ CA_default ]
+serial					= $dir/serial
+database				= $dir/certindex.txt
+new_certs_dir			= $dir/clients
+certificate				= $dir/ca/ca.crt
+crl						= $dir/ca/ca.crl
+private_key				= $dir/ca/ca.key
+default_days			= 365
+default_md				= md5
+preserve				= no
+email_in_dn				= no
+nameopt					= default_ca
+certopt					= default_ca
+policy					= policy_match
+ 
+[ policy_match ]
+countryName					= match
+stateOrProvinceName			= match
+organizationName			= match
+organizationalUnitName		= optional
+commonName					= supplied
+emailAddress				= optional
+ 
+[ req ]
+default_bits				= 1024			# Size of keys
+default_keyfile				= key.pem		# name of generated keys
+default_md					= md5			# message digest algorithm
+string_mask					= nombstr		# permitted characters
+distinguished_name			= req_distinguished_name
+req_extensions				= v3_req
+ 
+[ req_distinguished_name ]
+# Variable name				Prompt string
+#-------------------------	  ----------------------------------
+0.organizationName			= Organization Name (company)
+organizationalUnitName		= Organizational Unit Name (department, division)
+emailAddress				= Email Address
+emailAddress_max			= 40
+localityName				= Locality Name (city, district)
+stateOrProvinceName			= State or Province Name (full name)
+countryName					= Country Name (2 letter code)
+countryName_min				= 2
+countryName_max				= 2
+commonName					= Common Name (Computer Name, Server, or Username)
+commonName_max				= 64
+ 
+# Default values for the above, for consistency and less typing.
+# Variable name				Value
+#------------------------	  ------------------------------
+0.organizationName_default		= Berico Technologies
+organizationalUnitName_default  = Systems
+localityName_default			= Reston
+stateOrProvinceName_default		= Virginia
+countryName_default				= US
+emailAddress_default			= certauth@bericotechnologies.com
+commonName_default				= certauth
+ 
+[ v3_ca ]
+basicConstraints				= CA:TRUE
+subjectKeyIdentifier			= hash
+authorityKeyIdentifier			= keyid:always,issuer:always
+ 
+[ v3_req ]
+basicConstraints				= CA:FALSE
+subjectKeyIdentifier			= hash
